@@ -7,14 +7,6 @@
 <p align="center">
   A console-based campus queue management system built using C++ and Object-Oriented Programming concepts.
 </p>
-
-<p align="center">
-  ![C++](https://img.shields.io/badge/Language-C++17-blue?style=for-the-badge&logo=cplusplus&logoColor=white)
-  ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey?style=for-the-badge&logo=windows&logoColor=white)
-  ![Project](https://img.shields.io/badge/Project-OOP-success?style=for-the-badge)
-  ![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
-</p>
-
 ---
 
 ## 📌 Overview
@@ -283,7 +275,7 @@ Through this project, the following concepts were explored:
 ---
 
 <p align="center">
-  <b>Built with ❤️ using C++</b>
+  <b>Built using C++</b>
   <br>
   <i>QueueLess — Making campus queues a little less crowded.</i> 🚀
 </p>
