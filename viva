@@ -1,89 +1,149 @@
 Section A: Introduction to SELinux 
-1. What is SELinux? Ans. SELinux stands for Security-Enhanced Linux and provides mandatory 
+1. What is SELinux? 
+Ans. SELinux stands for Security-Enhanced Linux and provides mandatory 
 access control. 
-2. What is the main purpose of SELinux? Ans. It protects the Linux system by controlling access 
+
+2. What is the main purpose of SELinux? 
+Ans. It protects the Linux system by controlling access 
 to files and resources. 
+
 3. What is Mandatory Access Control (MAC)? Ans. MAC is a security mechanism that controls 
 access according to predefined security policies. 
+
 4. What are the three modes of SELinux? Ans. Enforcing, Permissive, and Disabled. 
+
 5. What is Enforcing mode? Ans. It applies security policies and blocks unauthorized actions. 
+
 6. What is Permissive mode? Ans. It records policy violations but does not block the actions. 
+
 7. What is Disabled mode? Ans. It means SELinux is not active on the system. 
+
 8. Which SELinux mode provides maximum security enforcement? Ans. Enforcing mode. 
+
 9. Which mode is useful for troubleshooting SELinux issues? Ans. Permissive mode. 
+
 10. Is SELinux enabled by default in Ubuntu? Ans. Ubuntu normally uses AppArmor instead of 
 SELinux. 
+
 Section B: SELinux Commands 
+
 11. What is the purpose of the `sestatus` command? Ans. It displays detailed information about 
 SELinux status. 
+
 12. What does the `getenforce` command do? Ans. It displays the current SELinux mode. 
+
 13. What is the purpose of the `setenforce` command? Ans. It temporarily changes the SELinux 
 enforcement mode. 
+
 14. What does `sudo setenforce 0` do? Ans. It changes SELinux from Enforcing to Permissive 
 mode. 
+
 15. What does `sudo setenforce 1` do? Ans. It changes SELinux to Enforcing mode. 
+
 16. Can `setenforce` enable SELinux if it is Disabled? Ans. No, it cannot enable SELinux when 
 it is Disabled. 
+
 17. Why do we use `sudo` with setenforce? Ans. It provides the administrator privileges required 
 to change SELinux mode. 
+
 18. Is the change made by setenforce permanent? Ans. No, it is temporary and normally lasts 
 until the next reboot. 
+
 19. What does `ls -l` display? Ans. It displays file permissions, ownership, size, and modification 
 time. 
+
 20. What is the purpose of `ls -Z`? Ans. It displays the SELinux security context of a file. 
+
 Section C: Web Directory and File Management 
+
 21. What is the purpose of `/var/www/html`? Ans. It is a common default document-root 
 directory for web server files. 
+
 22. Which command creates a web directory? Ans. `sudo mkdir -p /var/www/html` 
+
 23. What does the `mkdir` command do? Ans. It creates a new directory in Linux. 
+
 24. What is the purpose of the `-p` option in mkdir? Ans. It creates parent directories if required 
 and avoids errors if the directory already exists. 
+
 25. Which command creates a sample HTML file? Ans. `echo "Welcome to BCA Linux Lab" | 
 sudo tee /var/www/html/index.html` 
+
 26. What is the purpose of the `echo` command? Ans. It displays or sends text as output. 
+
 27. What does the `tee` command do? Ans. It writes input into a file and also displays it on the 
 terminal. 
+
 28. Why is `sudo tee` used instead of simple output redirection? Ans. Because sudo applies to 
 tee, allowing the file to be written with administrator privileges. 
+
 29. What is the purpose of the index.html file? Ans. It is commonly used as the default 
 homepage of a website. 
+
 30. What does `ls -l /var/www/html/index.html` show? Ans. It displays the standard Linux 
 permissions and details of the file. 
 Section D: SELinux Security Contexts 
+
 31. What is an SELinux security context? Ans. It is a security label assigned to a file, directory, 
 or process. 
+
 32. What is the purpose of `ls -Zd`? Ans. It displays the SELinux context of a directory itself. 
+
 33. What is the general format of an SELinux context? Ans. It commonly follows the format 
 user:role:type:level. 
+
 34. What does `system_u` represent in an SELinux context? Ans. It represents an SELinux user 
 identity assigned by policy. 
+
 35. What does `object_r` represent? Ans. It represents an SELinux role commonly used for files 
 and other objects. 
+
 36. What does `httpd_sys_content_t` represent? Ans. It is an SELinux type commonly used for 
 web content that a web server may read. 
+
 37. What does `s0` represent in an SELinux context? Ans. It represents the SELinux sensitivity 
 level. 
+
 38. Are Linux file permissions and SELinux labels the same? Ans. No, they are two separate 
 layers of access control. 
+
 39. Can SELinux block access even when Linux permissions allow it? Ans. Yes, SELinux can 
 block access if its security policy denies the action. 
+
 40. Why do we inspect the SELinux context of a web directory? Ans. To verify that files have the 
 expected security labels. 
 Section E: Restore Context and Troubleshooting 
-41. What is the purpose of the `restorecon` command? Ans. It restores the default SELinux 
+
+41. What is the purpose of the `restorecon` command? 
+Ans. It restores the default SELinux 
 security context according to the installed policy. 
-42. What does `sudo restorecon -v` do? Ans. It restores the expected file context and displays 
+
+42. What does `sudo restorecon -v` do? 
+Ans. It restores the expected file context and displays 
 the changes made. 
-43. What does the `-v` option mean? Ans. It stands for verbose and displays detailed 
+
+43. What does the `-v` option mean? 
+Ans. It stands for verbose and displays detailed 
 information about changes. 
-44. What does the `-R` option mean in restorecon? Ans. It applies the operation recursively to 
+
+44. What does the `-R` option mean in restorecon? 
+Ans. It applies the operation recursively to 
 directories and their contents. 
-45. What is the purpose of `sudo restorecon -Rv /var/www/html`? Ans. It recursively restores the 
+
+45. What is the purpose of `sudo restorecon -Rv /var/www/html`? 
+Ans. It recursively restores the 
 expected SELinux contexts of the web directory and its contents. 
-46. What does `command not found` mean? Ans. It means the required command or utility may 
+
+46. What does `command not found` mean? 
+Ans. It means the required command or utility may 
 not be installed or available. 
-47. Why might `getenforce` show Disabled? Ans. SELinux is disabled on the system. 
-48. Why might `setenforce` show Permission Denied? Ans. The user may not have sufficient 
+
+47. Why might `getenforce` show Disabled? 
+Ans. SELinux is disabled on the system. 
+
+48. Why might `setenforce` show Permission Denied? 
+Ans. The user may not have sufficient 
 administrator privileges. 
+
 49. Which Linux distributions commonly support SELinux?  
 Ans. Fedora, Rocky Linux, AlmaLinux, and Red Hat Enterprise Linux (RHEL)
