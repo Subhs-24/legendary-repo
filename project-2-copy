@@ -1,0 +1,74 @@
+
+#!/bin/bash
+
+# Automated File Organizer Using Bash Scripting
+
+SOURCE_DIR="$HOME/Downloads"
+DEST_DIR="$HOME/File-Organizer/Organized_Files"
+
+# Create destination directories
+mkdir -p "$DEST_DIR"/{Documents,Images,Videos,Audio,Archives,Others}
+
+echo "========================================"
+echo "       AUTOMATED FILE ORGANIZER"
+echo "========================================"
+echo
+
+# Check source directory
+if [ ! -d "$SOURCE_DIR" ]; then
+    echo "Source directory does not exist!"
+    exit 1
+fi
+
+# Organize files
+find "$SOURCE_DIR" -maxdepth 1 -type f | while IFS= read -r file
+do
+
+    filename=$(basename "$file")
+    extension="${filename##*.}"
+
+    case "$extension" in
+
+        txt|doc|docx|pdf|odt)
+            folder="Documents"
+            ;;
+
+        jpg|jpeg|png|gif|bmp|svg)
+            folder="Images"
+            ;;
+
+        mp4|mkv|avi|mov)
+            folder="Videos"
+            ;;
+
+        mp3|wav|flac|aac)
+            folder="Audio"
+            ;;
+
+        zip|rar|tar|gz|7z)
+            folder="Archives"
+            ;;
+
+        *)
+            folder="Others"
+            ;;
+
+    esac
+
+    # Move file to selected folder
+    if [ -e "$DEST_DIR/$folder/$filename" ]; then
+        echo "Skipped duplicate: $filename"
+    else
+        mv -- "$file" "$DEST_DIR/$folder/"
+        echo "Moved $filename -> $folder"
+    fi
+
+done
+
+echo
+echo "========================================"
+echo "       FILE ORGANIZATION COMPLETE"
+echo "========================================"
+echo
+echo "Organized files are available at:"
+echo "$DEST_DIR"
