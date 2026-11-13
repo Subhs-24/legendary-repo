@@ -1,0 +1,175 @@
+
+#!/bin/bash
+
+# Linux System Performance Monitoring and Reporting
+# Academic Linux Project
+
+REPORT_DIR="$HOME/Linux-System-Monitor/reports"
+
+mkdir -p "$REPORT_DIR"
+
+# Function to display heading
+header() {
+    clear
+    echo "=========================================="
+    echo "   LINUX SYSTEM PERFORMANCE MONITOR"
+    echo "=========================================="
+    echo
+}
+
+# CPU Monitoring
+cpu_monitor() {
+    echo "----------- CPU INFORMATION -------------"
+    top -bn1 | grep "Cpu(s)"
+    echo
+    echo "CPU Load Average:"
+    uptime
+    echo
+}
+
+# Memory Monitoring
+memory_monitor() {
+    echo "---------- MEMORY INFORMATION -----------"
+    free -h
+    echo
+}
+
+# Disk Monitoring
+disk_monitor() {
+    echo "----------- DISK INFORMATION ------------"
+    df -h
+    echo
+}
+
+# Process Monitoring
+process_monitor() {
+    echo "---------- RUNNING PROCESSES ------------"
+    ps -eo pid,user,comm,%cpu,%mem --sort=-%cpu | head -11
+    echo
+}
+
+# Uptime Monitoring
+uptime_monitor() {
+    echo "----------- SYSTEM UPTIME ---------------"
+    uptime -p
+    echo
+    echo "System Load:"
+    uptime | awk -F'load average:' '{print $2}'
+    echo
+}
+
+# Generate System Report
+generate_report() {
+
+    TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+    REPORT="$REPORT_DIR/system_report_$TIMESTAMP.txt"
+
+    {
+        echo "=========================================="
+        echo " LINUX SYSTEM PERFORMANCE REPORT"
+        echo "=========================================="
+        echo "Date: $(date)"
+        echo "Hostname: $(hostname)"
+        echo "Kernel: $(uname -r)"
+        echo
+
+        echo "CPU INFORMATION"
+        echo "------------------------------------------"
+        top -bn1 | grep "Cpu(s)"
+        echo
+
+        echo "MEMORY INFORMATION"
+        echo "------------------------------------------"
+        free -h
+        echo
+
+        echo "DISK INFORMATION"
+        echo "------------------------------------------"
+        df -h
+        echo
+
+        echo "SYSTEM UPTIME"
+        echo "------------------------------------------"
+        uptime
+        echo
+
+        echo "TOP RUNNING PROCESSES"
+        echo "------------------------------------------"
+        ps -eo pid,user,comm,%cpu,%mem --sort=-%cpu | head -11
+
+        echo
+        echo "========== END OF REPORT ================"
+
+    } > "$REPORT"
+
+    echo "System report generated successfully!"
+    echo "Report location: $REPORT"
+    echo
+}
+
+# Main Menu
+while true
+do
+    header
+
+    echo "1. CPU Utilization"
+    echo "2. Memory Utilization"
+    echo "3. Disk Utilization"
+    echo "4. Running Processes"
+    echo "5. System Uptime"
+    echo "6. Generate System Report"
+    echo "7. Exit"
+
+    echo
+    read -p "Enter your choice: " choice
+
+    case $choice in
+
+        1)
+            header
+            cpu_monitor
+            read -p "Press Enter to continue..."
+            ;;
+
+        2)
+            header
+            memory_monitor
+            read -p "Press Enter to continue..."
+            ;;
+
+        3)
+            header
+            disk_monitor
+            read -p "Press Enter to continue..."
+            ;;
+
+        4)
+            header
+            process_monitor
+            read -p "Press Enter to continue..."
+            ;;
+
+        5)
+            header
+            uptime_monitor
+            read -p "Press Enter to continue..."
+            ;;
+
+        6)
+            header
+            generate_report
+            read -p "Press Enter to continue..."
+            ;;
+
+        7)
+            echo "Exiting Linux System Monitor..."
+            exit 0
+            ;;
+
+        *)
+            echo "Invalid choice! Please try again."
+            sleep 2
+            ;;
+
+    esac
+done
